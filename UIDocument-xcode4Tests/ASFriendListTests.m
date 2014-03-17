@@ -82,4 +82,52 @@
     STAssertTrue([_fileManager fileExistsAtPath:_unitTestFilePath], nil);
 }
 
+- (void)testLoadingRetrievesData {
+    // учитываем, что мы уже сохранили данные из нашего класса
+    NSDate *birthdate = [NSDate date];
+    ASFriend *friend = [[ASFriend alloc] init];
+    friend.name = @"Me";
+    friend.birthdate = birthdate;
+    
+    ASFriendList *document = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
+    [document.friends addObject:friend];
+    
+    __block BOOL blockSuccess = NO;
+    
+    [document saveToURL:_unitTestFileUrl
+       forSaveOperation:UIDocumentSaveForCreating
+      completionHandler:^(BOOL success) {
+          blockSuccess = YES;
+          [self blockCalled];
+      }];
+    
+    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue(blockSuccess, nil);
+    
+    [document closeWithCompletionHandler:^(BOOL success) {
+        blockSuccess = YES;
+        [self blockCalled];
+    }];
+    
+    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue(blockSuccess, nil);
+    
+    // когда загружаем новый документ из этого файла
+    ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
+    [objUnderTest openWithCompletionHandler:^(BOOL success) {
+        blockSuccess = YES;
+        [self blockCalled];
+    }];
+    
+    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue(blockSuccess, nil);
+    
+    // данные должны успешно загружены и быть теми же, что мы сохранили
+    NSArray *friends = objUnderTest.friends;
+    STAssertEquals(friends.count, (NSUInteger)1, nil);
+    ASFriend *restoreFriend = [friends objectAtIndex:0];
+    STAssertEqualObjects(restoreFriend.name, @"Me", nil);
+    STAssertEqualObjects(restoreFriend.birthdate, birthdate, nil);
+}
+
 @end
