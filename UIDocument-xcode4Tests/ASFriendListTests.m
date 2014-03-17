@@ -120,10 +120,11 @@
         [self blockCalled];
     }];
     
+    // данные должны успешно загружены и быть теми же, что мы сохранили
     STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertTrue(blockSuccess, nil);
+    STAssertEquals(ASFLLR_SUCCESS, objUnderTest.loadResult, nil);
     
-    // данные должны успешно загружены и быть теми же, что мы сохранили
     NSArray *friends = objUnderTest.friends;
     STAssertEquals(friends.count, (NSUInteger)1, nil);
     ASFriend *restoreFriend = [friends objectAtIndex:0];
@@ -146,6 +147,7 @@
     // commpletion block должен быть вызван, но с указанием неисправности
     STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
+    STAssertEquals(ASFLLR_NO_SUCH_FILE, objUnderTest.loadResult, nil);
 }
 
 - (void)testLoadingEmptyFileShouldFailGracefully {
@@ -165,6 +167,7 @@
     // commpletion block должен быть вызван, но с указанием неисправности
     STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
+    STAssertEquals(ASFLLR_ZERO_LENGTH_FILE, objUnderTest.loadResult, nil);
 }
 
 - (void)testLoadingSingleByteFileShouldFailGracefully {
@@ -185,6 +188,7 @@
     // commpletion block должен быть вызван, но с указанием неисправности
     STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
+    STAssertEquals(ASFLLR_CORRUPT_FILE, objUnderTest.loadResult, nil);
 }
 
 - (void)testExceptionDuringUnarchiveShouldFailGracefully {
@@ -210,6 +214,7 @@
     // commpletion block должен быть вызван, но с указанием неисправности
     STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
+    STAssertEquals(ASFLLR_CORRUPT_FILE, objUnderTest.loadResult, nil);
 }
 
 - (void)testUnexpectedVersionShouldFailGracefully {
@@ -234,6 +239,7 @@
     // commpletion block должен быть вызван, но с указанием неисправности
     STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
+    STAssertEquals(ASFLLR_UNEXPECTED_VERSION, objUnderTest.loadResult, nil);
 }
 
 @end

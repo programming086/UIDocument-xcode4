@@ -15,6 +15,7 @@
 
 @implementation ASFriendList
 @synthesize friends = _friends;
+@synthesize loadResult = _loadResult;
 
 - (id)initWithFileURL:(NSURL *)url {
     self = [super initWithFileURL:url];
@@ -39,6 +40,7 @@
     NSData *data = (NSData *)contents;
     
     if (data.length == 0) {
+        _loadResult = ASFLLR_ZERO_LENGTH_FILE;
         return NO;
     }
     
@@ -52,16 +54,24 @@
                 break;
                 
             default:
+                _loadResult = ASFLLR_UNEXPECTED_VERSION;
                 return NO;
         }
         
     }
     @catch (NSException *exception) {
         NSLog(@">> %@ exception: %@", NSStringFromSelector(_cmd), exception);
+        _loadResult = ASFLLR_CORRUPT_FILE;
         return NO;
     }
     
+    _loadResult = ASFLLR_SUCCESS;
     return YES;
+}
+
+- (void)openWithCompletionHandler:(void (^)(BOOL))completionHandler {
+    _loadResult = ASFLLR_NO_SUCH_FILE;
+    [super openWithCompletionHandler:completionHandler];
 }
 
 @end
