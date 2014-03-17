@@ -9,6 +9,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 #import "ASFriendList.h"
 #import "ASFriend.h"
+#import "ASExplodingObject.h"
 
 @interface ASFriendListTests : SenTestCase
 
@@ -175,6 +176,30 @@
     // когда загружаем новый документ из файла
     __block BOOL blockSuccess = NO;
     
+    ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
+    [objUnderTest openWithCompletionHandler:^(BOOL success) {
+        blockSuccess = success;
+        [self blockCalled];
+    }];
+    
+    // commpletion block должен быть вызван, но с указанием неисправности
+    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertFalse(blockSuccess, nil);
+}
+
+- (void)testExceptionDuringUnarchiveShouldFailGracefully {
+    // предполагаем, что файл содержит объект, который кидаеть исключение, когда будет разархивирован
+    ASExplodingObject *exploding = [[ASExplodingObject alloc] init];
+    NSArray *array = [NSArray arrayWithObjects:exploding, nil];
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    [archiver encodeObject:array forKey:@"array"];
+    [archiver finishEncoding];
+    [data writeToFile:_unitTestFilePath atomically:YES];
+    
+    // когда загружаем новый документ из файла
+    __block BOOL blockSuccess = NO;
+
     ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
     [objUnderTest openWithCompletionHandler:^(BOOL success) {
         blockSuccess = success;

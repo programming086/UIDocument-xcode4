@@ -25,6 +25,7 @@
 		21A7574C18D719390090EF3D /* ASFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A7574918D719390090EF3D /* ASFriend.m */; };
 		21A7574D18D719390090EF3D /* ASFriendList.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A7574B18D719390090EF3D /* ASFriendList.m */; };
 		21A7574F18D719BA0090EF3D /* ASFriendListTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A7574E18D719BA0090EF3D /* ASFriendListTests.m */; };
+		21A7575218D7289E0090EF3D /* ASExplodingObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A7575118D7289E0090EF3D /* ASExplodingObject.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		21A7574A18D719390090EF3D /* ASFriendList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFriendList.h; sourceTree = "<group>"; };
 		21A7574B18D719390090EF3D /* ASFriendList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFriendList.m; sourceTree = "<group>"; };
 		21A7574E18D719BA0090EF3D /* ASFriendListTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFriendListTests.m; sourceTree = "<group>"; };
+		21A7575018D7289E0090EF3D /* ASExplodingObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASExplodingObject.h; sourceTree = "<group>"; };
+		21A7575118D7289E0090EF3D /* ASExplodingObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASExplodingObject.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,6 +175,8 @@
 				21A7574918D719390090EF3D /* ASFriend.m */,
 				21A7574A18D719390090EF3D /* ASFriendList.h */,
 				21A7574B18D719390090EF3D /* ASFriendList.m */,
+				21A7575018D7289E0090EF3D /* ASExplodingObject.h */,
+				21A7575118D7289E0090EF3D /* ASExplodingObject.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -292,6 +297,7 @@
 				21A7572618D7188C0090EF3D /* ASViewController.m in Sources */,
 				21A7574C18D719390090EF3D /* ASFriend.m in Sources */,
 				21A7574D18D719390090EF3D /* ASFriendList.m in Sources */,
+				21A7575218D7289E0090EF3D /* ASExplodingObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
