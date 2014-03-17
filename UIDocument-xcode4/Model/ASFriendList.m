@@ -38,9 +38,15 @@
         return NO;
     }
     
-    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    
-    _friends = [unarchiver decodeObjectForKey:kFriendListKeyArray];
+    @try {
+        NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
+        
+        _friends = [unarchiver decodeObjectForKey:kFriendListKeyArray];
+    }
+    @catch (NSException *exception) {
+        NSLog(@">> %@ exception: %@", NSStringFromSelector(_cmd), exception);
+        return NO;
+    }
     
     return YES;
 }
