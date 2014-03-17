@@ -34,6 +34,10 @@
 - (BOOL)loadFromContents:(id)contents ofType:(NSString *)typeName error:(NSError *__autoreleasing *)outError {
     NSData *data = (NSData *)contents;
     
+    if (data.length == 0) {
+        return NO;
+    }
+    
     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
     
     _friends = [unarchiver decodeObjectForKey:kFriendListKeyArray];
