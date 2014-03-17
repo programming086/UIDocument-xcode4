@@ -142,6 +142,7 @@
         [self blockCalled];
     }];
     
+    // commpletion block должен быть вызван, но с указанием неисправности
     STAssertTrue([self bloclCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
 }
@@ -160,6 +161,27 @@
         [self blockCalled];
     }];
     
+    // commpletion block должен быть вызван, но с указанием неисправности
+    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertFalse(blockSuccess, nil);
+}
+
+- (void)testLoadingSingleByteFileShouldFailGracefully {
+    // предполагаем, что файл существует и содержит 1 байт
+    NSMutableData *data = [NSMutableData dataWithLength:1];
+    [data appendBytes:" " length:1];
+    [data writeToFile:_unitTestFilePath atomically:YES];
+    
+    // когда загружаем новый документ из файла
+    __block BOOL blockSuccess = NO;
+    
+    ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
+    [objUnderTest openWithCompletionHandler:^(BOOL success) {
+        blockSuccess = success;
+        [self blockCalled];
+    }];
+    
+    // commpletion block должен быть вызван, но с указанием неисправности
     STAssertTrue([self bloclCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
 }
