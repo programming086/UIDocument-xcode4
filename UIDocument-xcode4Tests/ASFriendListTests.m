@@ -193,6 +193,7 @@
     NSArray *array = [NSArray arrayWithObjects:exploding, nil];
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    [archiver encodeInt:1 forKey:@"version"];
     [archiver encodeObject:array forKey:@"array"];
     [archiver finishEncoding];
     [data writeToFile:_unitTestFilePath atomically:YES];
