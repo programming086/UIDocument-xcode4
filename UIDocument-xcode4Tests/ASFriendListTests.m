@@ -23,8 +23,7 @@
     BOOL _blockCalled;
 }
 
-- (void)setUp
-{
+- (void)setUp {
     [super setUp];
     
     NSArray *dirs = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -38,8 +37,7 @@
     _blockCalled = NO;
 }
 
-- (void)tearDown
-{
+- (void)tearDown {
     _unitTestFileUrl = nil;
     _unitTestFilePath = nil;
     _fileManager = nil;
@@ -63,8 +61,7 @@
     return retval;
 }
 
-- (void)testSavingCreatesFile
-{
+- (void)testSavingCreatesFile {
     // учитывая, что мы имеем экземпляр нашего документа
     ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
     
