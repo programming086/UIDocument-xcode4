@@ -23,6 +23,8 @@
 		21A7573318D7188C0090EF3D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 21A7570E18D7188C0090EF3D /* Foundation.framework */; };
 		21A7573B18D7188C0090EF3D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 21A7573918D7188C0090EF3D /* InfoPlist.strings */; };
 		21A7573E18D7188C0090EF3D /* UIDocument_xcode4Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A7573D18D7188C0090EF3D /* UIDocument_xcode4Tests.m */; };
+		21A7574C18D719390090EF3D /* ASFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A7574918D719390090EF3D /* ASFriend.m */; };
+		21A7574D18D719390090EF3D /* ASFriendList.m in Sources */ = {isa = PBXBuildFile; fileRef = 21A7574B18D719390090EF3D /* ASFriendList.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +60,10 @@
 		21A7573A18D7188C0090EF3D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		21A7573C18D7188C0090EF3D /* UIDocument_xcode4Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIDocument_xcode4Tests.h; sourceTree = "<group>"; };
 		21A7573D18D7188C0090EF3D /* UIDocument_xcode4Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIDocument_xcode4Tests.m; sourceTree = "<group>"; };
+		21A7574818D719390090EF3D /* ASFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFriend.h; sourceTree = "<group>"; };
+		21A7574918D719390090EF3D /* ASFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFriend.m; sourceTree = "<group>"; };
+		21A7574A18D719390090EF3D /* ASFriendList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASFriendList.h; sourceTree = "<group>"; };
+		21A7574B18D719390090EF3D /* ASFriendList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASFriendList.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +123,7 @@
 		21A7571218D7188C0090EF3D /* UIDocument-xcode4 */ = {
 			isa = PBXGroup;
 			children = (
+				21A7574718D719390090EF3D /* Model */,
 				21A7571B18D7188C0090EF3D /* ASAppDelegate.h */,
 				21A7571C18D7188C0090EF3D /* ASAppDelegate.m */,
 				21A7572418D7188C0090EF3D /* ASViewController.h */,
@@ -158,6 +165,17 @@
 				21A7573918D7188C0090EF3D /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		21A7574718D719390090EF3D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				21A7574818D719390090EF3D /* ASFriend.h */,
+				21A7574918D719390090EF3D /* ASFriend.m */,
+				21A7574A18D719390090EF3D /* ASFriendList.h */,
+				21A7574B18D719390090EF3D /* ASFriendList.m */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -274,6 +292,8 @@
 				21A7571918D7188C0090EF3D /* main.m in Sources */,
 				21A7571D18D7188C0090EF3D /* ASAppDelegate.m in Sources */,
 				21A7572618D7188C0090EF3D /* ASViewController.m in Sources */,
+				21A7574C18D719390090EF3D /* ASFriend.m in Sources */,
+				21A7574D18D719390090EF3D /* ASFriendList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
