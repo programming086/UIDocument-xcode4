@@ -71,7 +71,7 @@
     [objUnderTest saveToURL:_unitTestFileUrl
            forSaveOperation:UIDocumentSaveForCreating
           completionHandler:^(BOOL success) {
-              blockSuccess = YES;
+              blockSuccess = success;
               [self blockCalled];
           }];
     
@@ -97,7 +97,7 @@
     [document saveToURL:_unitTestFileUrl
        forSaveOperation:UIDocumentSaveForCreating
       completionHandler:^(BOOL success) {
-          blockSuccess = YES;
+          blockSuccess = success;
           [self blockCalled];
       }];
     
@@ -105,7 +105,7 @@
     STAssertTrue(blockSuccess, nil);
     
     [document closeWithCompletionHandler:^(BOOL success) {
-        blockSuccess = YES;
+        blockSuccess = success;
         [self blockCalled];
     }];
     
@@ -115,7 +115,7 @@
     // когда загружаем новый документ из этого файла
     ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
     [objUnderTest openWithCompletionHandler:^(BOOL success) {
-        blockSuccess = YES;
+        blockSuccess = success;
         [self blockCalled];
     }];
     
@@ -138,12 +138,12 @@
     
     ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
     [objUnderTest openWithCompletionHandler:^(BOOL success) {
-        blockSuccess = YES;
+        blockSuccess = success;
         [self blockCalled];
     }];
     
     STAssertTrue([self bloclCalledWithTimeout:10], nil);
-    STAssertTrue(blockSuccess, nil);
+    STAssertFalse(blockSuccess, nil);
 }
 
 - (void)testLoadingEmptyFileShouldFailGracefully {
@@ -156,12 +156,12 @@
     
     ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
     [objUnderTest openWithCompletionHandler:^(BOOL success) {
-        blockSuccess = YES;
+        blockSuccess = success;
         [self blockCalled];
     }];
     
     STAssertTrue([self bloclCalledWithTimeout:10], nil);
-    STAssertTrue(blockSuccess, nil);
+    STAssertFalse(blockSuccess, nil);
 }
 
 @end
