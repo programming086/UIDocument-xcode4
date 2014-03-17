@@ -8,7 +8,10 @@
 
 #import "ASFriendList.h"
 
+#define kFriendListKeyVersion @"version"
 #define kFriendListKeyArray @"array"
+
+#define kFriendListCurrentVersion 1
 
 @implementation ASFriendList
 @synthesize friends = _friends;
@@ -25,6 +28,7 @@
     NSMutableData *data = [NSMutableData new];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
     
+    [archiver encodeInt:kFriendListCurrentVersion forKey:kFriendListKeyVersion];
     [archiver encodeObject:_friends forKey:kFriendListKeyArray];
     
     [archiver finishEncoding];
@@ -41,7 +45,16 @@
     @try {
         NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
         
-        _friends = [unarchiver decodeObjectForKey:kFriendListKeyArray];
+        int version = [unarchiver decodeIntForKey:kFriendListKeyVersion];
+        switch (version) {
+            case kFriendListCurrentVersion:
+                _friends = [unarchiver decodeObjectForKey:kFriendListKeyArray];
+                break;
+                
+            default:
+                return NO;
+        }
+        
     }
     @catch (NSException *exception) {
         NSLog(@">> %@ exception: %@", NSStringFromSelector(_cmd), exception);

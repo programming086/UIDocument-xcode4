@@ -50,7 +50,7 @@
     _blockCalled = YES;
 }
 
-- (BOOL)bloclCalledWithTimeout:(NSTimeInterval)timeout {
+- (BOOL)blockCalledWithTimeout:(NSTimeInterval)timeout {
     NSDate *loopUntil = [NSDate dateWithTimeIntervalSinceNow:timeout];
     while (!_blockCalled && [loopUntil timeIntervalSinceNow] > 0) {
         [[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode
@@ -76,7 +76,7 @@
               [self blockCalled];
           }];
     
-    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
     
     // операция должна выполнена успешно и файл должен быть создан
     STAssertTrue(blockSuccess, nil);
@@ -102,7 +102,7 @@
           [self blockCalled];
       }];
     
-    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertTrue(blockSuccess, nil);
     
     [document closeWithCompletionHandler:^(BOOL success) {
@@ -110,7 +110,7 @@
         [self blockCalled];
     }];
     
-    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertTrue(blockSuccess, nil);
     
     // когда загружаем новый документ из этого файла
@@ -120,7 +120,7 @@
         [self blockCalled];
     }];
     
-    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertTrue(blockSuccess, nil);
     
     // данные должны успешно загружены и быть теми же, что мы сохранили
@@ -144,7 +144,7 @@
     }];
     
     // commpletion block должен быть вызван, но с указанием неисправности
-    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
 }
 
@@ -163,7 +163,7 @@
     }];
     
     // commpletion block должен быть вызван, но с указанием неисправности
-    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
 }
 
@@ -183,7 +183,7 @@
     }];
     
     // commpletion block должен быть вызван, но с указанием неисправности
-    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
 }
 
@@ -207,7 +207,31 @@
     }];
     
     // commpletion block должен быть вызван, но с указанием неисправности
-    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
+    STAssertFalse(blockSuccess, nil);
+}
+
+- (void)testUnexpectedVersionShouldFailGracefully {
+    // предполагаем, что файл содержит неожиданный номер версии
+    NSArray *array = [NSArray array];
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    [archiver encodeInt:-999 forKey:@"version"];
+    [archiver encodeObject:array forKey:@"array"];
+    [archiver finishEncoding];
+    [data writeToFile:_unitTestFilePath atomically:YES];
+    
+    // когда загружаем новый документ из файла
+    __block BOOL blockSuccess = NO;
+    
+    ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
+    [objUnderTest openWithCompletionHandler:^(BOOL success) {
+        blockSuccess = success;
+        [self blockCalled];
+    }];
+    
+    // commpletion block должен быть вызван, но с указанием неисправности
+    STAssertTrue([self blockCalledWithTimeout:10], nil);
     STAssertFalse(blockSuccess, nil);
 }
 
