@@ -130,4 +130,19 @@
     STAssertEqualObjects(restoreFriend.birthdate, birthdate, nil);
 }
 
+- (void)testLoadingWhenThereIsNoFile {
+    // учитываем, что файл не существует
+    
+    __block BOOL blockSuccess = NO;
+    
+    ASFriendList *objUnderTest = [[ASFriendList alloc] initWithFileURL:_unitTestFileUrl];
+    [objUnderTest openWithCompletionHandler:^(BOOL success) {
+        blockSuccess = YES;
+        [self blockCalled];
+    }];
+    
+    STAssertTrue([self bloclCalledWithTimeout:10], nil);
+    STAssertTrue(blockSuccess, nil);
+}
+
 @end
